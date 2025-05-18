@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "/8PR282FRAE=",
+  "success": true,
+  "projectFilePath": "D:\\WinApp\\WpfApp3\\WpfApp3\\WpfApp3.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bagyi\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

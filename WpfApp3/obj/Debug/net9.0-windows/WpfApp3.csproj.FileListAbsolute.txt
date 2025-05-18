@@ -1,0 +1,10 @@
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3.csproj.AssemblyReference.cache
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\MainWindow.baml
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\MainWindow.g.cs
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\App.g.cs
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3_MarkupCompile.cache
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3.g.resources
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3.GeneratedMSBuildEditorConfig.editorconfig
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3.AssemblyInfoInputs.cache
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3.AssemblyInfo.cs
+D:\WinApp\WpfApp3\WpfApp3\obj\Debug\net9.0-windows\WpfApp3.csproj.CoreCompileInputs.cache

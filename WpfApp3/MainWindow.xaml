@@ -1,0 +1,363 @@
+﻿<Window x:Class="GaugeApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gauge Manager" Height="1080" Width="1920"
+        Background="White">
+    <Window.Resources>
+        <!-- your primary accent color -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#2E5B6F"/>
+
+        <!-- Sidebar buttons -->
+        <Style x:Key="SidebarButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+
+        <!-- SELECT / ADD IMAGE buttons -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="MinWidth" Value="80"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Yes/No toggle buttons -->
+        <Style x:Key="ToggleOptionStyle" TargetType="ToggleButton">
+            <Setter Property="MinWidth" Value="50"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- GroupBoxes with colored header and white content -->
+        <Style x:Key="HeaderedGroupBoxStyle" TargetType="GroupBox">
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupBox">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Header -->
+                            <Border Background="{StaticResource PrimaryBrush}"
+                                    CornerRadius="4,4,0,0"
+                                    Padding="8,4">
+                                <!-- Use a Label here so we can set Foreground & FontWeight -->
+                                <Label Content="{TemplateBinding Header}"
+                                       
+                                       Foreground="White"
+                                       FontWeight="Bold"
+                                       Background="Transparent"/>
+                            </Border>
+
+                            <!-- Content area -->
+                            <Border Grid.Row="1"
+                                    Background="White"
+                                    CornerRadius="0,0,4,4"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Slimmer, taller textboxes & datepickers with extra row spacing -->
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- Left Sidebar -->
+        <StackPanel DockPanel.Dock="Left"
+                    Width="60"
+                    Background="{StaticResource PrimaryBrush}">
+            <Button Style="{StaticResource SidebarButtonStyle}">
+                <TextBlock Text="🏎" FontSize="20" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButtonStyle}">
+                <TextBlock Text="🔧" FontSize="20" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButtonStyle}">
+                <TextBlock Text="📅" FontSize="20" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButtonStyle}">
+                <TextBlock Text="📋" FontSize="20" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButtonStyle}">
+                <TextBlock Text="📊" FontSize="20" HorizontalAlignment="Center"/>
+            </Button>
+            <Button Style="{StaticResource SidebarButtonStyle}">
+                <TextBlock Text="⚙" FontSize="20" HorizontalAlignment="Center"/>
+            </Button>
+        </StackPanel>
+
+        <!-- Main content -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20" Orientation="Vertical">
+
+                <!-- === GAGE STATUS === -->
+                <GroupBox Header="GAGE STATUS"
+                          Style="{StaticResource HeaderedGroupBoxStyle}"
+                          Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Status -->
+                        <TextBlock Text="Status:" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" Text="Active" IsReadOnly="True"/>
+                        <Button Grid.Column="2" Content="SELECT"
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+                        <!-- Last Calibration -->
+                        <TextBlock Text="Last Calibration:" Grid.Row="1" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Column="1" Grid.Row="1" SelectedDateFormat="Short"/>
+                        <Button Grid.Column="2" Grid.Row="1" Content="SELECT"
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+
+                        <!-- Next Calibration Due -->
+                        <TextBlock Text="Next Calibration Due:" Grid.Row="2" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Column="1" Grid.Row="2" SelectedDateFormat="Short"/>
+                        <Button Grid.Column="2" Grid.Row="2" Content="SELECT"
+                                Style="{StaticResource PrimaryButtonStyle}"/>
+                    </Grid>
+                </GroupBox>
+
+                <!-- === GAGE INFORMATION === -->
+                <GroupBox Header="GAGE INFORMATION"
+                          Style="{StaticResource HeaderedGroupBoxStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Left side: form fields -->
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <!-- GageList ID -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Created Date -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Control No -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Serial No -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Asset No -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Type -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Model No -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Manufacturer -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- MFR Website -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Measurement Types -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Units Of Measure -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Range/Size -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Accuracy -->
+                                <RowDefinition Height="Auto"/>
+                                <!-- Reference Standard -->
+                            </Grid.RowDefinitions>
+
+                            <!-- GageList ID -->
+                            <TextBlock Grid.Row="0" Text="GageList ID:" VerticalAlignment="Center"/>
+                            <TextBox    Grid.Row="0" Grid.Column="1"
+                                        Text="Auto" IsReadOnly="True"/>
+
+                            <!-- Created Date -->
+                            <TextBlock Grid.Row="1" Text="Created Date:" VerticalAlignment="Center"/>
+                            <TextBox    Grid.Row="1" Grid.Column="1"
+                                        Text="06/15/2023" IsReadOnly="True"/>
+
+                            <!-- Control No -->
+                            <TextBlock Grid.Row="2" Text="Control No:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="2" Grid.Column="1"/>
+
+                            <!-- Serial No -->
+                            <TextBlock Grid.Row="3" Text="Serial No:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="3" Grid.Column="1"/>
+
+                            <!-- Asset No -->
+                            <TextBlock Grid.Row="4" Text="Asset No:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="4" Grid.Column="1"/>
+
+                            <!-- Type -->
+                            <TextBlock Grid.Row="5" Text="Type:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="5" Grid.Column="1"/>
+                            <Button   Grid.Row="5" Grid.Column="2" Content="SELECT"
+                                      Style="{StaticResource PrimaryButtonStyle}"/>
+
+                            <!-- Model No -->
+                            <TextBlock Grid.Row="6" Text="Model No:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="6" Grid.Column="1"/>
+
+                            <!-- Manufacturer -->
+                            <TextBlock Grid.Row="7" Text="Manufacturer:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="7" Grid.Column="1"/>
+                            <Button   Grid.Row="7" Grid.Column="2" Content="SELECT"
+                                      Style="{StaticResource PrimaryButtonStyle}"/>
+
+                            <!-- Manufacturer's Website -->
+                            <TextBlock Grid.Row="8" Text="Manufacturer's Website:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="8" Grid.Column="1"/>
+
+                            <!-- Measurement Types -->
+                            <TextBlock Grid.Row="9" Text="Measurement Types:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="9" Grid.Column="1"/>
+                            <Button   Grid.Row="9" Grid.Column="2" Content="SELECT"
+                                      Style="{StaticResource PrimaryButtonStyle}"/>
+
+                            <!-- Units Of Measure -->
+                            <TextBlock Grid.Row="10" Text="Units Of Measure:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="10" Grid.Column="1"/>
+                            <Button   Grid.Row="10" Grid.Column="2" Content="SELECT"
+                                      Style="{StaticResource PrimaryButtonStyle}"/>
+
+                            <!-- Range or Size -->
+                            <TextBlock Grid.Row="11" Text="Range or Size:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="11" Grid.Column="1"/>
+
+                            <!-- Accuracy -->
+                            <TextBlock Grid.Row="12" Text="Accuracy:" VerticalAlignment="Center"/>
+                            <TextBox   Grid.Row="12" Grid.Column="1"/>
+
+                            <!-- Reference Standard -->
+                            <TextBlock Grid.Row="13" Text="Reference Standard:" VerticalAlignment="Center"/>
+                            <StackPanel Grid.Row="13" Grid.Column="1" Orientation="Horizontal">
+                                <ToggleButton Content="Yes"
+                                              Style="{StaticResource ToggleOptionStyle}"/>
+                                <ToggleButton Content="No"
+                                              IsChecked="True"
+                                              Style="{StaticResource ToggleOptionStyle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Right side: image upload placeholder -->
+                        <Grid Grid.Column="1" Margin="10">
+                            <Rectangle  
+                                Stroke="{StaticResource PrimaryBrush}"
+                                StrokeThickness="2"
+                                RadiusX="5" RadiusY="5"
+                                StrokeDashArray="4,2"
+                                Fill="Transparent"
+                                Height="250"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"/>
+
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                IsHitTestVisible="False"
+                                Height="250">
+                                <TextBlock Text="🖼"
+                                           FontSize="48"
+                                           Opacity="0.3"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Click to upload an image or drag it here."
+                                           Margin="5,2"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Only PNG &amp; JPEG image allowed. File size &lt; 1 MB"
+                                           FontSize="10"
+                                           Opacity="0.7"
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+
+                            <Button Content="ADD IMAGE"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,10,235"/>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,20,0,0">
+                    <Button x:Name="SaveButton"
+                            Content="SAVE"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Width="100"
+                            Click="SaveButton_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
